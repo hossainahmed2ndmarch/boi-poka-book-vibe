@@ -1,4 +1,5 @@
 import { useLoaderData, useParams } from "react-router-dom";
+import { addToStoredReadList } from "../../utility/addToDB";
 
 const BookDetail = () => {
   const { bookId } = useParams();
@@ -17,11 +18,20 @@ const BookDetail = () => {
     yearOfPublishing,
     publisher,
   } = bookDetail;
+
+  // Mark as read functionality
+  const handleMarkAsRead = (id) => {
+    addToStoredReadList(id);
+  };
+
   return (
     <div className="hero bg-white min-h-screen my-12">
       <div className="hero-content space-x-8 flex-col lg:flex-row">
         <div className="p-16 bg-[#1313130D] rounded-2xl">
-          <img src={image} className="max-w-sm h-[568px] rounded-lg shadow-2xl" />
+          <img
+            src={image}
+            className="max-w-sm h-[568px] rounded-lg shadow-2xl"
+          />
         </div>
         <div>
           <h1 className="text-[40px] font-bold">{bookName}</h1>
@@ -70,7 +80,10 @@ const BookDetail = () => {
               </tbody>
             </table>
           </div>
-          <button className="btn btn-outline border border-[#1313134D] mr-4 hover:bg-[#50B1C9] hover:outline-none hover:border-none">
+          <button
+            onClick={() => handleMarkAsRead(bookDetail.bookId)}
+            className="btn btn-outline border border-[#1313134D] mr-4 hover:bg-[#50B1C9] hover:outline-none hover:border-none"
+          >
             Read
           </button>
           <button className="btn bg-[#50B1C9] text-white">Wishlist</button>
